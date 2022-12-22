@@ -19,6 +19,7 @@
 		FD35169029536D7F006A7A86 /* start.json in Resources */ = {isa = PBXBuildFile; fileRef = FD35168F29536D7F006A7A86 /* start.json */; };
 		FD35169329536D9D006A7A86 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = FD35169229536D9D006A7A86 /* SnapKit */; };
 		FD35169529537720006A7A86 /* UIView+Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD35169429537720006A7A86 /* UIView+Extention.swift */; };
+		FD93411129548440003A315F /* NotesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD93411029548440003A315F /* NotesCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		FD35168929536C67006A7A86 /* StartAnimationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartAnimationViewController.swift; sourceTree = "<group>"; };
 		FD35168F29536D7F006A7A86 /* start.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = start.json; sourceTree = "<group>"; };
 		FD35169429537720006A7A86 /* UIView+Extention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extention.swift"; sourceTree = "<group>"; };
+		FD93411029548440003A315F /* NotesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +75,7 @@
 				FD35166F295369D2006A7A86 /* AppDelegate.swift */,
 				FD351671295369D2006A7A86 /* SceneDelegate.swift */,
 				FD351673295369D2006A7A86 /* NotesViewController.swift */,
+				FD93411029548440003A315F /* NotesCollectionViewCell.swift */,
 				FD35168929536C67006A7A86 /* StartAnimationViewController.swift */,
 				FD35167B295369D3006A7A86 /* Assets.xcassets */,
 				FD35167D295369D3006A7A86 /* LaunchScreen.storyboard */,
@@ -178,6 +181,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD93411129548440003A315F /* NotesCollectionViewCell.swift in Sources */,
 				FD35168A29536C67006A7A86 /* StartAnimationViewController.swift in Sources */,
 				FD351674295369D2006A7A86 /* NotesViewController.swift in Sources */,
 				FD351670295369D2006A7A86 /* AppDelegate.swift in Sources */,
