@@ -9,14 +9,13 @@ import UIKit
 
 class NotesViewController: UIViewController {
 
-    private lazy var notesCollectionView: UICollectionView = {
-        let collection = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        collection.delegate = self
-        collection.dataSource = self
-        collection.backgroundColor = .yellow
-        collection.translatesAutoresizingMaskIntoConstraints = false
-        collection.register(NotesCollectionViewCell.self, forCellWithReuseIdentifier: NotesCollectionViewCell.identifire)
-        return collection
+    private lazy var notesCollectionView: UITableView = {
+        let tableVIew = UITableView(frame: .zero, style: .plain)
+        tableVIew.delegate = self
+        tableVIew.dataSource = self
+        tableVIew.backgroundColor = .yellow
+        tableVIew.register(NotesTableViewCell.self, forCellReuseIdentifier: NotesTableViewCell.identifire)
+        return tableVIew
     }()
     
     override func viewDidLoad() {
@@ -36,25 +35,21 @@ class NotesViewController: UIViewController {
     
 }
  
-extension NotesViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let inset = 16
-        let width = Int(self.view.bounds.width)
-        let height = (Int(self.view.bounds.height) - inset*7)/6
-        return CGSize(width: width, height: height)
-    }
+extension NotesViewController: UITableViewDelegate {
+
 }
 
-extension NotesViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        100
+extension NotesViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        10
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NotesCollectionViewCell.identifire, for: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: NotesTableViewCell.identifire) as! NotesTableViewCell
         return cell
     }
     
+
     
 }
 
