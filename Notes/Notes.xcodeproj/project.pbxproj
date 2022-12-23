@@ -20,6 +20,7 @@
 		FD35169329536D9D006A7A86 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = FD35169229536D9D006A7A86 /* SnapKit */; };
 		FD35169529537720006A7A86 /* UIView+Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD35169429537720006A7A86 /* UIView+Extention.swift */; };
 		FD93411129548440003A315F /* NotesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD93411029548440003A315F /* NotesTableViewCell.swift */; };
+		FDD7B0CD295605CD000A243C /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD7B0CC295605CD000A243C /* NoteViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		FD35168F29536D7F006A7A86 /* start.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = start.json; sourceTree = "<group>"; };
 		FD35169429537720006A7A86 /* UIView+Extention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extention.swift"; sourceTree = "<group>"; };
 		FD93411029548440003A315F /* NotesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTableViewCell.swift; sourceTree = "<group>"; };
+		FDD7B0CC295605CD000A243C /* NoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 				FD351673295369D2006A7A86 /* NotesViewController.swift */,
 				FD93411029548440003A315F /* NotesTableViewCell.swift */,
 				FD35168929536C67006A7A86 /* StartAnimationViewController.swift */,
+				FDD7B0CC295605CD000A243C /* NoteViewController.swift */,
 				FD35167B295369D3006A7A86 /* Assets.xcassets */,
 				FD35167D295369D3006A7A86 /* LaunchScreen.storyboard */,
 				FD351680295369D3006A7A86 /* Info.plist */,
@@ -185,6 +188,7 @@
 				FD35168A29536C67006A7A86 /* StartAnimationViewController.swift in Sources */,
 				FD351674295369D2006A7A86 /* NotesViewController.swift in Sources */,
 				FD351670295369D2006A7A86 /* AppDelegate.swift in Sources */,
+				FDD7B0CD295605CD000A243C /* NoteViewController.swift in Sources */,
 				FD35169529537720006A7A86 /* UIView+Extention.swift in Sources */,
 				FD35168829536B5A006A7A86 /* UIColor+Extention.swift in Sources */,
 				FD351672295369D2006A7A86 /* SceneDelegate.swift in Sources */,
