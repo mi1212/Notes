@@ -11,42 +11,130 @@ import SnapKit
 
 class NoteViewController: UIViewController {
 
-    let titleView: UITextField = {
+    let scrollView = UIScrollView()
+    
+    let contentView = UIView()
+    
+    let titleTextField: UITextField = {
         let textField = UITextField()
         textField.textAlignment = .left
+        textField.placeholder = "Назовите заметку"
+        textField.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        textField.backgroundColor = .white
+        let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: 2))
+        textField.leftView = leftView
+        textField.leftViewMode = .always
+        textField.rightView = leftView
+        textField.rightViewMode = .always
+        return textField
+    }()
+    
+    let textTextField: UITextView = {
+        let textField = UITextView()
+        textField.textAlignment = .left
+        textField.font = UIFont.systemFont(ofSize: 16, weight: .light)
         textField.backgroundColor = .white
         return textField
     }()
     
-    let textView: UITextField = {
-        let textField = UITextField()
-        textField.textAlignment = .left
-        textField.backgroundColor = .white
-        return textField
+    var placeholderLabel = UILabel()
+    
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        return label
     }()
+    
+    let textLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.baselineAdjustment = .alignBaselines
+        label.font = UIFont.systemFont(ofSize: 16, weight: .light)
+        return label
+    }()
+    
+    convenience init(isReadingMode: Bool, note: NoteEntity?) {
+        self.init()
+        if isReadingMode {
+            if let note = note {
+                setupReadingLayout()
+                setupReadingModeData(note: note)
+            }
+        } else {
+            setupLayout()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupLayout()
+        setupPlaceholder()
         setupNavigationBar()
         self.view.backgroundColor = .backgroundColor
-        // Do any additional setup after loading the view.
     }
     
     private func setupLayout() {
-        self.view.addSubview(titleView)
-        self.view.addSubview(textView)
+        self.view.addSubview(titleTextField)
+        self.view.addSubview(textTextField)
         
         let inset = 16
         
-        titleView.snp.makeConstraints { make in
+        titleTextField.snp.makeConstraints { make in
             make.leading.trailing.top.equalTo(self.view.safeAreaLayoutGuide).inset(inset)
-            make.height.equalTo(64)
+            make.height.equalTo(48)
         }
         
-        textView.snp.makeConstraints { make in
-            make.top.equalTo(titleView.snp.bottom).inset(-inset)
+        textTextField.snp.makeConstraints { make in
+            make.top.equalTo(titleTextField.snp.bottom)
             make.leading.trailing.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(inset)
+        }
+    }
+    
+    private func setupReadingLayout() {
+        self.view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(textLabel)
+        let inset = 16
+        
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        contentView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+            make.width.equalTo(scrollView.snp.width)
+        }
+        
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(contentView)
+            make.leading.trailing.top.equalTo(contentView).inset(inset)
+            make.height.equalTo(32)
+        }
+        
+        textLabel.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom)
+            make.height.greaterThanOrEqualTo(28)
+            make.leading.trailing.equalTo(contentView).inset(inset)
+            make.bottom.equalTo(contentView)
+        }
+    }
+    
+    private func setupPlaceholder() {
+        
+        textTextField.delegate = self
+        placeholderLabel.text = "Запишите сюда свои мысли"
+        placeholderLabel.font = UIFont.systemFont(ofSize: 16, weight: .light)
+        placeholderLabel.sizeToFit()
+        textTextField.addSubview(placeholderLabel)
+        placeholderLabel.frame.origin = CGPoint(x: 8, y: (textTextField.font?.pointSize)! / 2)
+        placeholderLabel.textColor = .tertiaryLabel
+        placeholderLabel.isHidden = !textTextField.text.isEmpty
+    }
+    
+    private func setupReadingModeData(note: NoteEntity) {
+        if let title = note.title, let text = note.text, let date = note.date {
+            titleLabel.text = title
+            textLabel.text = text
         }
     }
     
@@ -56,7 +144,7 @@ class NoteViewController: UIViewController {
     }
     
     @objc func tapSaveButton() {
-        if let text = textView.text, let title = titleView.text {
+        if let text = textTextField.text, let title = titleTextField.text {
             let date = Date.now
             
             saveNote(title: title, text: text, date: date)
@@ -64,13 +152,11 @@ class NoteViewController: UIViewController {
     }
     
     func saveNote(title: String, text: String, date: Date) {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = getContext()
         
-        let managedContext = appDelegate.persistentContainer.viewContext
+        guard let entity = NSEntityDescription.entity(forEntityName: "NoteEntity", in: context) else { return }
         
-        guard let entity = NSEntityDescription.entity(forEntityName: "Note", in: managedContext) else { return }
-     
-        let note = NSManagedObject(entity: entity, insertInto: managedContext)
+        let note = NoteEntity(entity: entity, insertInto: context)
         
         note.setValue(title, forKey: "title")
         
@@ -79,10 +165,21 @@ class NoteViewController: UIViewController {
         note.setValue(date, forKey: "date")
         
         do  {
-            try managedContext.save()
+            try context.save()
         } catch let error as NSError {
             print(error.localizedDescription)
         }
     }
+    
+    private func getContext() -> NSManagedObjectContext {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        return appDelegate.persistentContainer.viewContext
+    }
 
+}
+
+extension NoteViewController : UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        placeholderLabel.isHidden = !textView.text.isEmpty
+    }
 }

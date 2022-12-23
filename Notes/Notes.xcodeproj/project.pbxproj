@@ -21,6 +21,8 @@
 		FD35169529537720006A7A86 /* UIView+Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD35169429537720006A7A86 /* UIView+Extention.swift */; };
 		FD93411129548440003A315F /* NotesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD93411029548440003A315F /* NotesTableViewCell.swift */; };
 		FDD7B0CD295605CD000A243C /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD7B0CC295605CD000A243C /* NoteViewController.swift */; };
+		FDD7B0D029560F9F000A243C /* NoteEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD7B0CE29560F9F000A243C /* NoteEntity+CoreDataClass.swift */; };
+		FDD7B0D129560F9F000A243C /* NoteEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD7B0CF29560F9F000A243C /* NoteEntity+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,8 @@
 		FD35169429537720006A7A86 /* UIView+Extention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extention.swift"; sourceTree = "<group>"; };
 		FD93411029548440003A315F /* NotesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTableViewCell.swift; sourceTree = "<group>"; };
 		FDD7B0CC295605CD000A243C /* NoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
+		FDD7B0CE29560F9F000A243C /* NoteEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		FDD7B0CF29560F9F000A243C /* NoteEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +60,8 @@
 		FD351663295369D2006A7A86 = {
 			isa = PBXGroup;
 			children = (
+				FDD7B0CE29560F9F000A243C /* NoteEntity+CoreDataClass.swift */,
+				FDD7B0CF29560F9F000A243C /* NoteEntity+CoreDataProperties.swift */,
 				FD35166E295369D2006A7A86 /* Notes */,
 				FD35166D295369D2006A7A86 /* Products */,
 			);
@@ -189,7 +195,9 @@
 				FD351674295369D2006A7A86 /* NotesViewController.swift in Sources */,
 				FD351670295369D2006A7A86 /* AppDelegate.swift in Sources */,
 				FDD7B0CD295605CD000A243C /* NoteViewController.swift in Sources */,
+				FDD7B0D129560F9F000A243C /* NoteEntity+CoreDataProperties.swift in Sources */,
 				FD35169529537720006A7A86 /* UIView+Extention.swift in Sources */,
+				FDD7B0D029560F9F000A243C /* NoteEntity+CoreDataClass.swift in Sources */,
 				FD35168829536B5A006A7A86 /* UIColor+Extention.swift in Sources */,
 				FD351672295369D2006A7A86 /* SceneDelegate.swift in Sources */,
 				FD35167A295369D2006A7A86 /* Notes.xcdatamodeld in Sources */,

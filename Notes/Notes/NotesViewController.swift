@@ -10,13 +10,13 @@ import CoreData
 
 class NotesViewController: UIViewController {
 
-    var notes = [NSManagedObject]()
+    var notes = [NoteEntity]()
     
-    private lazy var notesCollectionView: UITableView = {
+    private lazy var notesTableView: UITableView = {
         let tableVIew = UITableView(frame: .zero, style: .plain)
         tableVIew.delegate = self
         tableVIew.dataSource = self
-        tableVIew.backgroundColor = .yellow
+        tableVIew.backgroundColor = .clear
         tableVIew.register(NotesTableViewCell.self, forCellReuseIdentifier: NotesTableViewCell.identifire)
         return tableVIew
     }()
@@ -25,16 +25,18 @@ class NotesViewController: UIViewController {
         super.viewDidLoad()
         setupLayout()
         setupNavigationBar()
-        fetchNotes()
         self.view.backgroundColor = .backgroundColor
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        fetchNotes()
     }
 
     private func setupLayout() {
-        self.view.addSubview(notesCollectionView)
+        self.view.addSubview(notesTableView)
         
-        notesCollectionView.snp.makeConstraints { make in
-            make.edges.equalTo(self.view.safeAreaLayoutGuide)
+        notesTableView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
     }
     
@@ -44,39 +46,75 @@ class NotesViewController: UIViewController {
     }
     
     @objc func addNote() {
-        let newTaskVC = NoteViewController()
+        let newTaskVC = NoteViewController(isReadingMode: false, note: nil)
         self.navigationController?.pushViewController(newTaskVC, animated: true)
     }
     
     private func fetchNotes() {
-        let managedContext = getContext()
+
+        let context = getContext()
         
-        let fetchRequest: NSFetchRequest<NSManagedObject> = NSManagedObject.fetchRequest()
+        let fetchRequest: NSFetchRequest<NoteEntity> = NoteEntity.fetchRequest()
         
-        var error: NSError?
-         
         do  {
-            let fetchedResults =
-            try managedContext.execute(fetchRequest) as? [NSManagedObject]
-            
-            if let result = fetchedResults {
-                notes = result
-            }
+            notes = try context.fetch(fetchRequest)
+            notesTableView.reloadData()
         } catch let error as NSError {
             print(error.localizedDescription)
         }
-
+        
     }
     
     private func getContext() -> NSManagedObjectContext {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         return appDelegate.persistentContainer.viewContext
     }
-    
 }
  
 extension NotesViewController: UITableViewDelegate {
 
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let context = self.getContext()
+        let note = notes[indexPath.row]
+
+        let deleteAction = UIContextualAction(style: .destructive, title: nil) { (_, _, completionHandler) in
+
+            context.delete(note)
+
+            do  {
+                try context.save()
+            } catch let error as NSError {
+                print(error.localizedDescription)
+            }
+
+            let fetchRequest: NSFetchRequest<NoteEntity> = NoteEntity.fetchRequest()
+
+            do  {
+                self.notes = try context.fetch(fetchRequest)
+            } catch let error as NSError {
+                print(error.localizedDescription)
+            }
+
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+
+            completionHandler(true)
+        }
+
+        deleteAction.image = UIImage(systemName: "trash")
+        deleteAction.backgroundColor = .systemRed
+
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        return configuration
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! NotesTableViewCell
+        cell.selectionStyle = .none
+        let note = notes[indexPath.row]
+        let vc = NoteViewController(isReadingMode: true, note: note)
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
 }
 
 extension NotesViewController: UITableViewDataSource {
@@ -87,6 +125,14 @@ extension NotesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: NotesTableViewCell.identifire) as! NotesTableViewCell
         let note = notes[indexPath.row]
+
+        if let title = note.title, let text = note.text, let date = note.date {
+            cell.setupCellData(
+                title: title,
+                text: text,
+                date: date
+            )
+        }
         
         return cell
     }
