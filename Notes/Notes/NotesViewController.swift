@@ -58,6 +58,7 @@ class NotesViewController: UIViewController {
         
         do  {
             notes = try context.fetch(fetchRequest)
+            produceOneNote()
             notesTableView.reloadData()
         } catch let error as NSError {
             print(error.localizedDescription)
@@ -68,6 +69,25 @@ class NotesViewController: UIViewController {
     private func getContext() -> NSManagedObjectContext {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         return appDelegate.persistentContainer.viewContext
+    }
+    
+    private func produceOneNote() {
+        if self.notes.count == 0 {
+            let context = getContext()
+            
+            guard let entity = NSEntityDescription.entity(forEntityName: "NoteEntity", in: context) else { return }
+            let note = NoteEntity(entity: entity, insertInto: context)
+            
+            note.setValue("Some title", forKey: "title")
+            note.setValue("Some text", forKey: "text")
+            note.setValue(Date.now, forKey: "date")
+            self.notes.append(note)
+            do  {
+                try context.save()
+            } catch let error as NSError {
+                print(error.localizedDescription)
+            }
+        }
     }
 }
  

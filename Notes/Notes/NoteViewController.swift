@@ -15,7 +15,7 @@ class NoteViewController: UIViewController {
     
     var isEditMode = false {
         didSet{
-            print("Note: title - \(self.note?.title), text - \(self.note?.text)")
+//            print("Note: title - \(self.note?.title), text - \(self.note?.text)")
             removeViews()
             setupLayout(note: self.note)
         }
@@ -152,6 +152,7 @@ class NoteViewController: UIViewController {
     private func removeViews() {
         if isEditMode {
             scrollView.removeFromSuperview()
+            
         } else {
             textTextField.removeFromSuperview()
             titleTextField.removeFromSuperview()
@@ -197,9 +198,9 @@ class NoteViewController: UIViewController {
     
     @objc func tapSaveButton() {
         if let text = textTextField.text, let title = titleTextField.text {
-                let date = Date.now
-                isEditMode = false
-                saveNote(title: title, text: text, date: date)
+            let date = Date.now
+            saveNote(title: title, text: text, date: date)
+            isEditMode = false
         }
     }
     
@@ -210,6 +211,7 @@ class NoteViewController: UIViewController {
     func saveNote(title: String, text: String, date: Date) {
         if let note = self.note {
             let context = getContext()
+
             context.delete(note)
             
             guard let entity = NSEntityDescription.entity(forEntityName: "NoteEntity", in: context) else { return }
@@ -220,6 +222,25 @@ class NoteViewController: UIViewController {
             note.setValue(date, forKey: "date")
             
             self.note = note
+
+            do  {
+                try context.save()
+            } catch let error as NSError {
+                print(error.localizedDescription)
+            }
+        } else {
+            let context = getContext()
+            
+            guard let entity = NSEntityDescription.entity(forEntityName: "NoteEntity", in: context) else { return }
+            let note = NoteEntity(entity: entity, insertInto: context)
+            
+            note.setValue(title, forKey: "title")
+            note.setValue(text, forKey: "text")
+            note.setValue(date, forKey: "date")
+            
+            self.note = note
+            
+            
             do  {
                 try context.save()
             } catch let error as NSError {
