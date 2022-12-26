@@ -11,6 +11,8 @@ import SnapKit
 
 class NoteViewController: UIViewController {
     
+    let notificationCentre = NotificationCenter.default
+    
     var note: NoteEntity?
     
     var isEditMode = false {
@@ -40,13 +42,12 @@ class NoteViewController: UIViewController {
         return textField
     }()
     
-    let textTextField: UITextView = {
-        let textField = UITextView()
-        textField.textAlignment = .left
-        textField.font = UIFont.systemFont(ofSize: 16, weight: .light)
-        let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: 2))
-        textField.backgroundColor = .white
-        return textField
+    let textTextView: UITextView = {
+        let textView = UITextView()
+        textView.textAlignment = .left
+        textView.font = UIFont.systemFont(ofSize: 16, weight: .light)
+        textView.backgroundColor = .white
+        return textView
     }()
     
     var placeholderLabel = UILabel()
@@ -76,13 +77,8 @@ class NoteViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        scrollView.backgroundColor = .systemRed
-//        contentView.backgroundColor = .blue
-//        textLabel.backgroundColor = .green
-//        titleLabel.backgroundColor = .yellow
-//        textTextField.backgroundColor = .green
-//        titleTextField.backgroundColor = .yellow
         setupPlaceholderToTextView()
+        self.view.addGestureRecognizer(tapToDissmissedKeyboard)
         self.view.backgroundColor = .backgroundColor
     }
 
@@ -103,7 +99,7 @@ class NoteViewController: UIViewController {
     
     private func setupEditingLayout() {
         self.view.addSubview(titleTextField)
-        self.view.addSubview(textTextField)
+        self.view.addSubview(textTextView)
         
         let inset = 16
 
@@ -113,7 +109,7 @@ class NoteViewController: UIViewController {
             make.height.equalTo(32)
         }
 
-        textTextField.snp.makeConstraints { make in
+        textTextView.snp.makeConstraints { make in
             make.top.equalTo(titleTextField.snp.bottom)
             make.leading.trailing.bottom.equalToSuperview().inset(inset)
         }
@@ -127,7 +123,8 @@ class NoteViewController: UIViewController {
         let inset = 16
         
         scrollView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalTo(self.view.safeAreaLayoutGuide)
+            make.leading.trailing.bottom.equalToSuperview()
         }
         
         contentView.snp.makeConstraints { make in
@@ -154,33 +151,33 @@ class NoteViewController: UIViewController {
             scrollView.removeFromSuperview()
             
         } else {
-            textTextField.removeFromSuperview()
+            textTextView.removeFromSuperview()
             titleTextField.removeFromSuperview()
         }
     }
     
     private func setupEditingData(note: NoteEntity?){
         if let note = note {
-            textTextField.text = note.text
+            textTextView.text = note.text
             titleTextField.text = note.title
         }
     }
 
     private func setupPlaceholderToTextView() {
         if self.note == nil {
-            textTextField.delegate = self
+            textTextView.delegate = self
             placeholderLabel.text = "Запишите сюда свои мысли"
             placeholderLabel.font = UIFont.systemFont(ofSize: 16, weight: .light)
             placeholderLabel.sizeToFit()
-            textTextField.addSubview(placeholderLabel)
-            placeholderLabel.frame.origin = CGPoint(x: 8, y: (textTextField.font?.pointSize)! / 2)
+            textTextView.addSubview(placeholderLabel)
+            placeholderLabel.frame.origin = CGPoint(x: 8, y: (textTextView.font?.pointSize)! / 2)
             placeholderLabel.textColor = .tertiaryLabel
-            placeholderLabel.isHidden = !textTextField.text.isEmpty
+            placeholderLabel.isHidden = !textTextView.text.isEmpty
         }
     }
     
     private func setupReadingModeData(note: NoteEntity) {
-        if let title = note.title, let text = note.text, let date = note.date {
+        if let title = note.title, let text = note.text, let _ = note.date {
             titleLabel.text = title
             textLabel.text = text
         }
@@ -197,7 +194,7 @@ class NoteViewController: UIViewController {
     }
     
     @objc func tapSaveButton() {
-        if let text = textTextField.text, let title = titleTextField.text {
+        if let text = textTextView.text, let title = titleTextField.text {
             let date = Date.now
             saveNote(title: title, text: text, date: date)
             isEditMode = false
@@ -253,11 +250,14 @@ class NoteViewController: UIViewController {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         return appDelegate.persistentContainer.viewContext
     }
-
-}
-
-extension NoteViewController : UITextViewDelegate {
-    func textViewDidChange(_ textView: UITextView) {
-        placeholderLabel.isHidden = !textView.text.isEmpty
+    
+    private lazy var tapToDissmissedKeyboard: UITapGestureRecognizer = {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        return tap
+    }()
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
+
 }

@@ -20,6 +20,8 @@
 		FD35169529537720006A7A86 /* UIView+Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD35169429537720006A7A86 /* UIView+Extention.swift */; };
 		FD93411129548440003A315F /* NotesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD93411029548440003A315F /* NotesTableViewCell.swift */; };
 		FDA8A6B8295743650009DA11 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDA8A6B7295743650009DA11 /* LaunchScreen.storyboard */; };
+		FDA8A6BA2959C12A0009DA11 /* NoteViewController + Extention(Keyboard).swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA8A6B92959C12A0009DA11 /* NoteViewController + Extention(Keyboard).swift */; };
+		FDA8A6BC2959C3090009DA11 /* NoteViewController + Extention(TextView placeholder).swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA8A6BB2959C3090009DA11 /* NoteViewController + Extention(TextView placeholder).swift */; };
 		FDD7B0CD295605CD000A243C /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD7B0CC295605CD000A243C /* NoteViewController.swift */; };
 		FDD7B0D029560F9F000A243C /* NoteEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD7B0CE29560F9F000A243C /* NoteEntity+CoreDataClass.swift */; };
 		FDD7B0D129560F9F000A243C /* NoteEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD7B0CF29560F9F000A243C /* NoteEntity+CoreDataProperties.swift */; };
@@ -39,6 +41,8 @@
 		FD35169429537720006A7A86 /* UIView+Extention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extention.swift"; sourceTree = "<group>"; };
 		FD93411029548440003A315F /* NotesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTableViewCell.swift; sourceTree = "<group>"; };
 		FDA8A6B7295743650009DA11 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		FDA8A6B92959C12A0009DA11 /* NoteViewController + Extention(Keyboard).swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteViewController + Extention(Keyboard).swift"; sourceTree = "<group>"; };
+		FDA8A6BB2959C3090009DA11 /* NoteViewController + Extention(TextView placeholder).swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteViewController + Extention(TextView placeholder).swift"; sourceTree = "<group>"; };
 		FDD7B0CC295605CD000A243C /* NoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
 		FDD7B0CE29560F9F000A243C /* NoteEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FDD7B0CF29560F9F000A243C /* NoteEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -97,6 +101,8 @@
 		FD35168629536B43006A7A86 /* Extentions */ = {
 			isa = PBXGroup;
 			children = (
+				FDA8A6B92959C12A0009DA11 /* NoteViewController + Extention(Keyboard).swift */,
+				FDA8A6BB2959C3090009DA11 /* NoteViewController + Extention(TextView placeholder).swift */,
 				FD35168729536B5A006A7A86 /* UIColor+Extention.swift */,
 				FD35169429537720006A7A86 /* UIView+Extention.swift */,
 			);
@@ -191,6 +197,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD93411129548440003A315F /* NotesTableViewCell.swift in Sources */,
+				FDA8A6BA2959C12A0009DA11 /* NoteViewController + Extention(Keyboard).swift in Sources */,
 				FD35168A29536C67006A7A86 /* StartAnimationViewController.swift in Sources */,
 				FD351674295369D2006A7A86 /* NotesViewController.swift in Sources */,
 				FD351670295369D2006A7A86 /* AppDelegate.swift in Sources */,
@@ -201,6 +208,7 @@
 				FD35168829536B5A006A7A86 /* UIColor+Extention.swift in Sources */,
 				FD351672295369D2006A7A86 /* SceneDelegate.swift in Sources */,
 				FD35167A295369D2006A7A86 /* Notes.xcdatamodeld in Sources */,
+				FDA8A6BC2959C3090009DA11 /* NoteViewController + Extention(TextView placeholder).swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
