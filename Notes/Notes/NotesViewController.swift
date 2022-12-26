@@ -46,7 +46,7 @@ class NotesViewController: UIViewController {
     }
     
     @objc func addNote() {
-        let newTaskVC = NoteViewController(isReadingMode: false, note: nil)
+        let newTaskVC = NoteViewController(isEditMode: true, note: nil)
         self.navigationController?.pushViewController(newTaskVC, animated: true)
     }
     
@@ -111,7 +111,7 @@ extension NotesViewController: UITableViewDelegate {
         let cell = tableView.cellForRow(at: indexPath) as! NotesTableViewCell
         cell.selectionStyle = .none
         let note = notes[indexPath.row]
-        let vc = NoteViewController(isReadingMode: true, note: note)
+        let vc = NoteViewController(isEditMode: false, note: note)
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

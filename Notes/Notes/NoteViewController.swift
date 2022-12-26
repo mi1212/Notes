@@ -10,7 +10,18 @@ import CoreData
 import SnapKit
 
 class NoteViewController: UIViewController {
-
+    
+    var note: NoteEntity?
+    
+    var isEditMode = false {
+        didSet{
+            print("Note: title - \(self.note?.title), text - \(self.note?.text)")
+            removeViews()
+            setupLayout(note: self.note)
+        }
+    }
+    var isAlreadySaved = false
+    
     let scrollView = UIScrollView()
     
     let contentView = UIView()
@@ -33,6 +44,7 @@ class NoteViewController: UIViewController {
         let textField = UITextView()
         textField.textAlignment = .left
         textField.font = UIFont.systemFont(ofSize: 16, weight: .light)
+        let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: 2))
         textField.backgroundColor = .white
         return textField
     }()
@@ -53,42 +65,60 @@ class NoteViewController: UIViewController {
         return label
     }()
     
-    convenience init(isReadingMode: Bool, note: NoteEntity?) {
+    convenience init(isEditMode: Bool, note: NoteEntity?) {
         self.init()
-        if isReadingMode {
-            if let note = note {
-                setupReadingLayout()
-                setupReadingModeData(note: note)
-            }
-        } else {
-            setupLayout()
+        self.isEditMode = isEditMode
+        setupLayout(note: note)
+        if let note = note {
+            self.note = note
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupPlaceholder()
-        setupNavigationBar()
+//        scrollView.backgroundColor = .systemRed
+//        contentView.backgroundColor = .blue
+//        textLabel.backgroundColor = .green
+//        titleLabel.backgroundColor = .yellow
+//        textTextField.backgroundColor = .green
+//        titleTextField.backgroundColor = .yellow
+        setupPlaceholderToTextView()
         self.view.backgroundColor = .backgroundColor
     }
+
+    private func setupLayout(note: NoteEntity?) {
+        if isEditMode {
+            setupEditingLayout()
+            setupEditingData(note: note)
+            setupNavigationBar(isEditMode: isEditMode)
+        } else {
+            if let note = note {
+                self.note = note
+                setupReadingLayout()
+                setupReadingModeData(note: note)
+                setupNavigationBar(isEditMode: isEditMode)
+            }
+        }
+    }
     
-    private func setupLayout() {
+    private func setupEditingLayout() {
         self.view.addSubview(titleTextField)
         self.view.addSubview(textTextField)
         
         let inset = 16
-        
+
         titleTextField.snp.makeConstraints { make in
-            make.leading.trailing.top.equalTo(self.view.safeAreaLayoutGuide).inset(inset)
-            make.height.equalTo(48)
+            make.top.equalTo(self.view.safeAreaLayoutGuide)
+            make.leading.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(inset)
+            make.height.equalTo(32)
         }
-        
+
         textTextField.snp.makeConstraints { make in
             make.top.equalTo(titleTextField.snp.bottom)
-            make.leading.trailing.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(inset)
+            make.leading.trailing.bottom.equalToSuperview().inset(inset)
         }
     }
-    
+
     private func setupReadingLayout() {
         self.view.addSubview(scrollView)
         scrollView.addSubview(contentView)
@@ -107,28 +137,45 @@ class NoteViewController: UIViewController {
         
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(contentView)
-            make.leading.trailing.top.equalTo(contentView).inset(inset)
+            make.leading.trailing.top.equalTo(contentView).inset(inset+8)
             make.height.equalTo(32)
         }
         
         textLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom)
-            make.height.greaterThanOrEqualTo(28)
-            make.leading.trailing.equalTo(contentView).inset(inset)
+            make.height.greaterThanOrEqualTo(32)
+            make.leading.trailing.equalTo(contentView).inset(inset+8)
             make.bottom.equalTo(contentView)
         }
     }
     
-    private func setupPlaceholder() {
-        
-        textTextField.delegate = self
-        placeholderLabel.text = "Запишите сюда свои мысли"
-        placeholderLabel.font = UIFont.systemFont(ofSize: 16, weight: .light)
-        placeholderLabel.sizeToFit()
-        textTextField.addSubview(placeholderLabel)
-        placeholderLabel.frame.origin = CGPoint(x: 8, y: (textTextField.font?.pointSize)! / 2)
-        placeholderLabel.textColor = .tertiaryLabel
-        placeholderLabel.isHidden = !textTextField.text.isEmpty
+    private func removeViews() {
+        if isEditMode {
+            scrollView.removeFromSuperview()
+        } else {
+            textTextField.removeFromSuperview()
+            titleTextField.removeFromSuperview()
+        }
+    }
+    
+    private func setupEditingData(note: NoteEntity?){
+        if let note = note {
+            textTextField.text = note.text
+            titleTextField.text = note.title
+        }
+    }
+
+    private func setupPlaceholderToTextView() {
+        if self.note == nil {
+            textTextField.delegate = self
+            placeholderLabel.text = "Запишите сюда свои мысли"
+            placeholderLabel.font = UIFont.systemFont(ofSize: 16, weight: .light)
+            placeholderLabel.sizeToFit()
+            textTextField.addSubview(placeholderLabel)
+            placeholderLabel.frame.origin = CGPoint(x: 8, y: (textTextField.font?.pointSize)! / 2)
+            placeholderLabel.textColor = .tertiaryLabel
+            placeholderLabel.isHidden = !textTextField.text.isEmpty
+        }
     }
     
     private func setupReadingModeData(note: NoteEntity) {
@@ -138,36 +185,46 @@ class NoteViewController: UIViewController {
         }
     }
     
-    private func setupNavigationBar() {
-        let saveButton = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .done , target: self, action: #selector(tapSaveButton))
-        self.navigationItem.rightBarButtonItem = saveButton
+    private func setupNavigationBar(isEditMode: Bool) {
+        if isEditMode {
+            let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(tapSaveButton))
+            self.navigationItem.rightBarButtonItem = saveButton
+        } else {
+            let editButton = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(tapEditButton))
+            self.navigationItem.rightBarButtonItem = editButton
+        }
     }
     
     @objc func tapSaveButton() {
         if let text = textTextField.text, let title = titleTextField.text {
-            let date = Date.now
-            
-            saveNote(title: title, text: text, date: date)
+                let date = Date.now
+                isEditMode = false
+                saveNote(title: title, text: text, date: date)
         }
     }
     
+    @objc func tapEditButton() {
+        isEditMode = true
+    }
+    
     func saveNote(title: String, text: String, date: Date) {
-        let context = getContext()
-        
-        guard let entity = NSEntityDescription.entity(forEntityName: "NoteEntity", in: context) else { return }
-        
-        let note = NoteEntity(entity: entity, insertInto: context)
-        
-        note.setValue(title, forKey: "title")
-        
-        note.setValue(text, forKey: "text")
-        
-        note.setValue(date, forKey: "date")
-        
-        do  {
-            try context.save()
-        } catch let error as NSError {
-            print(error.localizedDescription)
+        if let note = self.note {
+            let context = getContext()
+            context.delete(note)
+            
+            guard let entity = NSEntityDescription.entity(forEntityName: "NoteEntity", in: context) else { return }
+            let note = NoteEntity(entity: entity, insertInto: context)
+            
+            note.setValue(title, forKey: "title")
+            note.setValue(text, forKey: "text")
+            note.setValue(date, forKey: "date")
+            
+            self.note = note
+            do  {
+                try context.save()
+            } catch let error as NSError {
+                print(error.localizedDescription)
+            }
         }
     }
     

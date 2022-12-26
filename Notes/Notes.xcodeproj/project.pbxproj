@@ -12,7 +12,6 @@
 		FD351674295369D2006A7A86 /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD351673295369D2006A7A86 /* NotesViewController.swift */; };
 		FD35167A295369D2006A7A86 /* Notes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FD351678295369D2006A7A86 /* Notes.xcdatamodeld */; };
 		FD35167C295369D3006A7A86 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD35167B295369D3006A7A86 /* Assets.xcassets */; };
-		FD35167F295369D3006A7A86 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD35167D295369D3006A7A86 /* LaunchScreen.storyboard */; };
 		FD35168829536B5A006A7A86 /* UIColor+Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD35168729536B5A006A7A86 /* UIColor+Extention.swift */; };
 		FD35168A29536C67006A7A86 /* StartAnimationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD35168929536C67006A7A86 /* StartAnimationViewController.swift */; };
 		FD35168D29536D56006A7A86 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = FD35168C29536D56006A7A86 /* Lottie */; };
@@ -20,6 +19,7 @@
 		FD35169329536D9D006A7A86 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = FD35169229536D9D006A7A86 /* SnapKit */; };
 		FD35169529537720006A7A86 /* UIView+Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD35169429537720006A7A86 /* UIView+Extention.swift */; };
 		FD93411129548440003A315F /* NotesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD93411029548440003A315F /* NotesTableViewCell.swift */; };
+		FDA8A6B8295743650009DA11 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDA8A6B7295743650009DA11 /* LaunchScreen.storyboard */; };
 		FDD7B0CD295605CD000A243C /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD7B0CC295605CD000A243C /* NoteViewController.swift */; };
 		FDD7B0D029560F9F000A243C /* NoteEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD7B0CE29560F9F000A243C /* NoteEntity+CoreDataClass.swift */; };
 		FDD7B0D129560F9F000A243C /* NoteEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD7B0CF29560F9F000A243C /* NoteEntity+CoreDataProperties.swift */; };
@@ -32,13 +32,13 @@
 		FD351673295369D2006A7A86 /* NotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
 		FD351679295369D2006A7A86 /* Notes.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Notes.xcdatamodel; sourceTree = "<group>"; };
 		FD35167B295369D3006A7A86 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		FD35167E295369D3006A7A86 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FD351680295369D3006A7A86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD35168729536B5A006A7A86 /* UIColor+Extention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extention.swift"; sourceTree = "<group>"; };
 		FD35168929536C67006A7A86 /* StartAnimationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartAnimationViewController.swift; sourceTree = "<group>"; };
 		FD35168F29536D7F006A7A86 /* start.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = start.json; sourceTree = "<group>"; };
 		FD35169429537720006A7A86 /* UIView+Extention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extention.swift"; sourceTree = "<group>"; };
 		FD93411029548440003A315F /* NotesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTableViewCell.swift; sourceTree = "<group>"; };
+		FDA8A6B7295743650009DA11 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FDD7B0CC295605CD000A243C /* NoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
 		FDD7B0CE29560F9F000A243C /* NoteEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FDD7B0CF29560F9F000A243C /* NoteEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -86,8 +86,8 @@
 				FD93411029548440003A315F /* NotesTableViewCell.swift */,
 				FD35168929536C67006A7A86 /* StartAnimationViewController.swift */,
 				FDD7B0CC295605CD000A243C /* NoteViewController.swift */,
+				FDA8A6B7295743650009DA11 /* LaunchScreen.storyboard */,
 				FD35167B295369D3006A7A86 /* Assets.xcassets */,
-				FD35167D295369D3006A7A86 /* LaunchScreen.storyboard */,
 				FD351680295369D3006A7A86 /* Info.plist */,
 				FD351678295369D2006A7A86 /* Notes.xcdatamodeld */,
 			);
@@ -177,7 +177,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FD35167F295369D3006A7A86 /* LaunchScreen.storyboard in Resources */,
+				FDA8A6B8295743650009DA11 /* LaunchScreen.storyboard in Resources */,
 				FD35169029536D7F006A7A86 /* start.json in Resources */,
 				FD35167C295369D3006A7A86 /* Assets.xcassets in Resources */,
 			);
@@ -205,17 +205,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		FD35167D295369D3006A7A86 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FD35167E295369D3006A7A86 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		FD351681295369D3006A7A86 /* Debug */ = {
